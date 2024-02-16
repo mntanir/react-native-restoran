@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     heading: {
-        textAlign: 'center',
         textDecorationLine: 'underline',
         fontWeight: 'bold',
         marginBottom: 5
