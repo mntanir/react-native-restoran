@@ -1,16 +1,19 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, ScrollView, Image } from 'react-native'
 import React from 'react'
 
 export default function ResultDetail({ result }) {
   return (
-    <View style={styles.container} >
+    <ScrollView
+    style={styles.container}
+    showsVerticalScrollIndicator={false}
+    >
         <Text style={styles.heading}>{result.name}</Text>
         <Image
             style={styles.image}
             source={result.image_url ? {uri:result.image_url} : null}
         />
-        <Text style={styles.name}>{result.rating} Yıldızlı Restoran, {result.review_count} Değerlendirme</Text>
-    </View>
+        <Text style={styles.name}>{result.rating} Yıldızlı Restoran, {result.reScrollView_count} Değerlendirme</Text>
+    </ScrollView>
   )
 }
 

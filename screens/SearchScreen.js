@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 import SearchBar from '../components/SearchBar'
 import useResults from '../api/hooks/useResults'
@@ -18,7 +18,7 @@ export default function SearchScreen() {
     }
 
     return (
-        <View>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <SearchBar
             term={term}
             onTermChange={setTerm}
@@ -41,7 +41,7 @@ export default function SearchScreen() {
               />
             </>
           )}
-        </View>
+        </ScrollView>
       )
 } 
 
