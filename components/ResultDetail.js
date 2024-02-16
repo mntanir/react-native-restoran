@@ -12,7 +12,7 @@ export default function ResultDetail({ result }) {
             style={styles.image}
             source={result.image_url ? {uri:result.image_url} : null}
         />
-        <Text style={styles.name}>{result.rating} Yıldızlı Restoran, {result.review_count} Değerlendirme</Text>
+        <Text style={styles.name}>{result.rating} Yıldızlı Restoran, {result.reScrollView_count} Değerlendirme</Text>
     </ScrollView>
   )
 }
