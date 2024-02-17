@@ -15,7 +15,7 @@ export default function ResultDetail({ result }) {
             />
             <View style={ styles.info }>
                 <Text numberOfLines={1} style={styles.heading}>{result.name}</Text>
-                <Text style={[styles.name, styles.star]}>{result.rating}<AntDesign name="star" size={15} color="green" /></Text>
+                <Text style={[styles.name, styles.star]}>{result.rating} <AntDesign name="star" size={15} color="green" /></Text>
                 <Text style={[styles.name, styles.review]}>{result.review_count} Değerlendirme</Text>
             </View>
         </View>
@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 10
     },
     name: {
-        fontWeight: 'bold'
+        fontWeight: '500'
     },
     heading: {
-        textDecorationLine: 'underline',
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '800',
         marginBottom: 5,
         marginLeft: 5,
         maxWidth: '70%'

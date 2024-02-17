@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FlatList, Image, Linking, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FontAwesome5, Feather } from '@expo/vector-icons';
 import yelp from '../api/yelp';
+import MapView, { Marker } from 'react-native-maps';
 
 export default function ResultsShowScreen({ route }) {
   const [result, setResult] = useState(null);
@@ -37,27 +38,23 @@ export default function ResultsShowScreen({ route }) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <View style={ styles.top }>
-      <Text style={styles.title}>{result.name}</Text>
-      <Text style={styles.phone}>Telefon: {result.phone}</Text>
-      <View style={styles.iconContainer}>
-        {result.is_closed ? (
-          <>
-          <View style={ styles.ifopen }>
-            <Text style={[styles.iconText, {color:'red'}]}>Kapalı</Text>
-            <FontAwesome5 name="door-closed" size={25} color="black" />
-          </View>
-          </>
-        ) : (
-          <>
-            <View style={ styles.ifopen }>
-            <Text style={[styles.iconText, {color:'green'}]}>Açık</Text>
-            <FontAwesome5 name="door-open" size={25} color="green" />
+    <ScrollView style={{ flex: 1 }}>
+      <View style={[{ flex: 1 }, styles.top]}>
+        <Text style={styles.title}>{result.name}</Text>
+        <Text style={styles.phone} onPress={() => Linking.openURL(`tel:${result.phone}`)}><Feather name="phone-call" size={22} color="black" /> {result.phone}</Text>
+        <View style={styles.iconContainer}>
+          {result.is_closed ? (
+            <View style={styles.ifopen}>
+              <Text style={[styles.iconText, { color: 'red' }]}>Kapalı</Text>
+              <FontAwesome5 name="door-closed" size={25} color="black" />
             </View>
-          </>
-        )}
-      </View>
+          ) : (
+            <View style={styles.ifopen}>
+              <Text style={[styles.iconText, { color: 'green' }]}>Açık</Text>
+              <FontAwesome5 name="door-open" size={25} color="green" />
+            </View>
+          )}
+        </View>
       </View>
       <Text style={styles.imgtext}>Görseller</Text>
       <FlatList
@@ -74,8 +71,27 @@ export default function ResultsShowScreen({ route }) {
           <Image style={styles.modalImage} source={{ uri: selectedImage }} />
         </TouchableOpacity>
       </Modal>
-    </View>
+      <Text style={styles.imgtext}>Konum</Text>
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          latitude: result.coordinates.latitude,
+          longitude: result.coordinates.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      >
+        <Marker
+          coordinate={{
+            latitude: result.coordinates.latitude,
+            longitude: result.coordinates.longitude,
+          }}
+          title={result.name}
+        />
+      </MapView>
+    </ScrollView>
   );
+  
 }
 
 const styles = StyleSheet.create({
@@ -141,5 +157,12 @@ const styles = StyleSheet.create({
   ifopen: {
     margin: 10,
     flexDirection: 'row'
+  },
+  map: {
+    flex: 1,
+    height: 250,
+    margin: 10,
+    width: '100vw',
+    marginTop: 0
   }
 });
