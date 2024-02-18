@@ -86,12 +86,10 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     backgroundColor: 'white',
-    marginTop: 5,
-    marginLeft: 10,
-    marginRight: 10,
+    margin: 10,
+    marginHorizontal: 15,
     borderRadius: 10,
     elevation: 5,
-    marginBottom: 10
   },
   listItem: {
     paddingVertical: 5,
