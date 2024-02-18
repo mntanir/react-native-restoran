@@ -28,6 +28,10 @@ export default function ResultsShowScreen({ route }) {
     setModalVisible(true);
   };
 
+  const handleMapPress = () => {
+    Linking.openURL(`https://www.google.com/maps/search/?api=1&query=${result.coordinates.latitude},${result.coordinates.longitude}`);
+  };
+
   const closeModal = () => {
     setSelectedImage(null);
     setModalVisible(false);
@@ -41,7 +45,7 @@ export default function ResultsShowScreen({ route }) {
     <ScrollView style={{ flex: 1 }}>
       <View style={[{ flex: 1 }, styles.top]}>
         <Text style={styles.title}>{result.name}</Text>
-        <Text style={styles.phone} onPress={() => Linking.openURL(`tel:${result.phone}`)}><Feather name="phone-call" size={22} color="black" /> {result.phone}</Text>
+        <Text style={styles.phone} onPress={() => Linking.openURL(`tel:${result.phone}`)}><Feather name="phone-call" size={22} color="black" /> {result.display_phone}</Text>
         <View style={styles.iconContainer}>
           {result.is_closed ? (
             <View style={styles.ifopen}>
@@ -56,7 +60,7 @@ export default function ResultsShowScreen({ route }) {
           )}
         </View>
       </View>
-      <Text style={styles.imgtext}>Görseller</Text>
+        <Text style={styles.imgtext}>Görseller</Text>
       <FlatList
         horizontal
         data={result.photos}
@@ -71,8 +75,9 @@ export default function ResultsShowScreen({ route }) {
           <Image style={styles.modalImage} source={{ uri: selectedImage }} />
         </TouchableOpacity>
       </Modal>
-      <Text style={styles.imgtext}>Konum</Text>
+        <Text style={styles.imgtext}>Konum</Text>
       <MapView
+        onPress={handleMapPress}
         style={styles.map}
         initialRegion={{
           latitude: result.coordinates.latitude,
@@ -91,7 +96,6 @@ export default function ResultsShowScreen({ route }) {
       </MapView>
     </ScrollView>
   );
-  
 }
 
 const styles = StyleSheet.create({
@@ -108,8 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#0001',
     paddingHorizontal: 10,
     paddingBottom: 5,
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
     fontWeight: 'bold'
   },
   phone: {
@@ -164,5 +166,5 @@ const styles = StyleSheet.create({
     margin: 10,
     width: '100vw',
     marginTop: 0
-  }
+  },
 });

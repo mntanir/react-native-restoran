@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchScreen from './screens/SearchScreen';
@@ -17,12 +17,14 @@ export default function App() {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
+            maxWidth: Dimensions.get('window').width * 0.7,
+            maxHeight: 60,
           },
           headerTitle: () => (
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Image
                 source={require('./assets/logo.png')}
-                style={{ width: 160, height: 80, marginRight: 10}}
+                style={{ width: 80, height: 40}}
               />
             </View>
           ),

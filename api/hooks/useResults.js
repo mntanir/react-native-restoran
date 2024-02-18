@@ -24,7 +24,7 @@ export default () => {
     }
     
     useEffect(() => {
-        searchApi('kebap');
+        searchApi('pide');
     },[]);
 
     return [searchApi, results, errorMsg];

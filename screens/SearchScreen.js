@@ -17,32 +17,51 @@ export default function SearchScreen() {
         })
     }
 
+    const handleSelectItem = (item) => {
+        searchApi(item);
+      };
+
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <SearchBar
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <SearchBar
             term={term}
             onTermChange={setTerm}
-            onTermSubmit={() => searchApi(term)}
-          />
+            onTermSubmit={() => searchApi(term)}     
+            onSelectItem={handleSelectItem}       
+        />
           {errorMsg ? <Text>{errorMsg}</Text> : null}
-          {results.length === 0 ? <Text style={{marginLeft:15}}>Arama sonuçları bulunamadı.</Text> : (
-            <>
-              <ResultsList
-                title='Ucuz Restoranlar'
-                results={filterResultsByPrice("₺")}
-              />
-              <ResultsList
-                title='Uygun Restoranlar'
-                results={filterResultsByPrice("₺₺")}
-              />
-              <ResultsList
-                title='Pahalı Restoranlar'
-                results={filterResultsByPrice("₺₺₺")}
-              />
-            </>
+          {results.length === 0 ? (
+              <Text style={{ marginLeft: 15 }}>Arama sonuçları bulunamadı.</Text>
+          ) : (
+              <>
+                  {results.filter(result => result.price === "₺").length > 0 ? (
+                      <ResultsList
+                          title='Ucuz Restoranlar'
+                          results={filterResultsByPrice("₺")}
+                      />
+                  ) : (
+                      null
+                  )}
+                  {results.filter(result => result.price === "₺₺").length > 0 ? (
+                      <ResultsList
+                          title='Uygun Restoranlar'
+                          results={filterResultsByPrice("₺₺")}
+                      />
+                  ) : (
+                      null
+                  )}
+                  {results.filter(result => result.price === "₺₺₺").length > 0 ? (
+                      <ResultsList
+                          title='Pahalı Restoranlar'
+                          results={filterResultsByPrice("₺₺₺")}
+                      />
+                  ) : (
+                      null
+                  )}
+              </>
           )}
-        </ScrollView>
-      )
+      </ScrollView>
+  )
 } 
 
 const styles = StyleSheet.create({})
