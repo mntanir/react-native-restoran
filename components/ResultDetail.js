@@ -32,7 +32,9 @@ const styles = StyleSheet.create({
         height: 120,
         marginBottom: 5,
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10
+        borderTopRightRadius: 10,
+        maxHeight: 120,
+        maxWidth: 270
     },
     name: {
         fontWeight: '500'
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
         fontWeight: '800',
         marginBottom: 5,
         marginLeft: 5,
-        maxWidth: '70%'
+        maxWidth: 200
     },
     box: {
         borderStyle: 'solid',

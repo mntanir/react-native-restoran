@@ -1,24 +1,42 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Animated } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
 export default function SearchBar({ onTermChange, onTermSubmit, term, onSelectItem }) {
+
+  const [heightAnim] = useState(new Animated.Value(0)); // Yeni bir Animated.Value tanımladık
+
   const [showList, setShowList] = useState(false);
 
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const handleToggleList = () => {
+      const toValue = showList ? 0 : 270;
+      setShowList(!showList);
+      Animated.timing(
+        heightAnim,
+        {
+          toValue,
+          duration: 250,
+          useNativeDriver: false,
+        }
+      ).start(() => {
+        heightAnim.setValue(toValue);
+      });
+  };
+  
   const renderList = () => {
     if (showList) {
       return (
-        <View style={styles.listContainer}>
+        <Animated.View style={[styles.listContainer, { height: heightAnim }]}>
           <TouchableOpacity onPress={() => handleSelectItem('Döner')} style={[styles.listItem, selectedItem === 'Döner' && styles.selectedItem]}>
           <Text style={selectedItem === 'Döner' ? styles.selectedItemText : styles.listItemText}>Döner</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleSelectItem('Kebap')} style={[styles.listItem, selectedItem === 'Kebap' && styles.selectedItem]}>
           <Text style={selectedItem === 'Kebap' ? styles.selectedItemText : styles.listItemText}>Kebap</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => handleSelectItem('Pide')} style={[styles.listItem, selectedItem === 'Pide' && styles.selectedItem]}>
-          <Text style={selectedItem === 'Pide' ? styles.selectedItemText : styles.listItemText}>Pide</Text>
+          <TouchableOpacity onPress={() => handleSelectItem('Çorba')} style={[styles.listItem, selectedItem === 'Çorba' && styles.selectedItem]}>
+          <Text style={selectedItem === 'Çorba' ? styles.selectedItemText : styles.listItemText}>Çorba</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleSelectItem('Tatlı')} style={[styles.listItem, selectedItem === 'Tatlı' && styles.selectedItem]}>
           <Text style={selectedItem === 'Tatlı' ? styles.selectedItemText : styles.listItemText}>Tatlı</Text>
@@ -26,7 +44,7 @@ export default function SearchBar({ onTermChange, onTermSubmit, term, onSelectIt
           <TouchableOpacity style={ styles.listItem } onPress={() => handleSelectItem('')}>
           <Text style={ [styles.listItemText, styles.bordered] }>Seçimi İptal Et  <AntDesign name="closecircleo" size={14} color="red" /></Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       );
     }
     return null;
@@ -54,10 +72,10 @@ export default function SearchBar({ onTermChange, onTermSubmit, term, onSelectIt
           autoCapitalize='none'
           value={term}
           onChangeText={onTermChange}
-          onFocus={() => setShowList(false)} // Arama çubuğuna tıklandığında liste gizlensin
+          onFocus={() => setShowList(false)}
           onEndEditing={onTermSubmit}
         />
-        <TouchableOpacity onPress={() => setShowList(!showList)}>
+        <TouchableOpacity onPress={handleToggleList}>
           <AntDesign
             style={styles.iconStyle}
             name={showList ? "upcircle" : "filter"}
@@ -92,7 +110,6 @@ const styles = StyleSheet.create({
     margin: 10,
     marginHorizontal: 15,
     borderRadius: 10,
-    elevation: 5,
   },
   listItem: {
     paddingVertical: 5,
@@ -112,7 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     fontSize: 16,
-    backgroundColor: 'green',
+    backgroundColor: '#7fd394',
   },
   bordered: {
     borderWidth: 1,
