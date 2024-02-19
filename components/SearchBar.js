@@ -23,6 +23,9 @@ export default function SearchBar({ onTermChange, onTermSubmit, term, onSelectIt
           <TouchableOpacity onPress={() => handleSelectItem('Tatlı')} style={[styles.listItem, selectedItem === 'Tatlı' && styles.selectedItem]}>
           <Text style={selectedItem === 'Tatlı' ? styles.selectedItemText : styles.listItemText}>Tatlı</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={ styles.listItem } onPress={() => handleSelectItem('')}>
+          <Text style={ [styles.listItemText, styles.bordered] }>Seçimi İptal Et  <AntDesign name="closecircleo" size={14} color="red" /></Text>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -111,4 +114,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: 'green',
   },
+  bordered: {
+    borderWidth: 1,
+    borderColor: 'red',
+    borderRadius: 10,
+    padding: 10,
+    textAlign: 'center',
+    fontWeight: 'bold'
+  }
 });
